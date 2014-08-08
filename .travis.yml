@@ -1,4 +1,8 @@
 language: ruby
 rvm:
-  - 2.0.0
-  
+- 2.0.0
+deploy:
+  provider: heroku
+  api_key:
+    secure: Gsq2yhUqhbBezvtaRTUXYO19KUAPv2+q+3050PnjPmMYJp4wgIRavDGET8q3SLuirHtkyjjmUFbqKgp7ciAH9gqMOdJZpdx5j5Sdm0kEPDv5hmJMQk5XrCtSZUUxREOtc6JOr/P0g8Ryhm/75sbY6wUGJCi97NU995V/2zCgP0g=
+  app: salty-garden-6583
