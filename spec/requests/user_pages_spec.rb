@@ -66,6 +66,13 @@ describe "User Pages" do
       it { should have_content(m1.content) }
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
+      it { should_not have_content("delete") }
+
+      describe "with signed-in profile page" do
+        before { sign_in user }
+
+        it { should have_content("delete") }
+      end
     end
   end
 
