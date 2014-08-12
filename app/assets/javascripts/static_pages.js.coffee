@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
-  $("#txt-micropost-content").bind 'keyup', ->
+  $("#micropost_content").bind 'keyup', ->
     textElement = $(this)
     microValue = textElement.val()
     currentCount = microValue.length
