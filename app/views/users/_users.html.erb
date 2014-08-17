@@ -1,0 +1,10 @@
+<% if @users.any? %>
+  <% if current_page?(users_path) %>
+    <%= will_paginate %>
+  <% end %>
+  <ul class="users">
+    <%= render @users %>
+  </ul>
+  <%= will_paginate %>
+<% end %>
+</div>
