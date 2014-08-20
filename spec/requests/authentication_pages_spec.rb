@@ -14,11 +14,11 @@ describe "Authentication" do
       before { click_button "Sign in" }
 
       it { should have_title(full_title('Sign in')) }
-      it { should have_selector(full_banner_css("error")) }
+      it { should have_selector(full_banner_css("danger")) }
 
       describe "after visiting another page" do
         before { click_link "Home" }
-        it { should_not have_selector(full_banner_css('error')) }
+        it { should_not have_selector(full_banner_css('danger')) }
       end
     end
 

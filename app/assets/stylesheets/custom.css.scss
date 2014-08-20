@@ -2,6 +2,7 @@
 
 /* mixins, variables, etc. */
 
+$navbar-height: 28px;
 $grayMediumLight: #eaeaea;
 
 @mixin box_sizing {
@@ -14,10 +15,6 @@ $grayMediumLight: #eaeaea;
 
 html {
   overflow-y: scroll;
-}
-
-body {
-  padding-top: 60px;
 }
 
 section {
@@ -35,45 +32,23 @@ textarea {
   }
 }
 
-/* typography */
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
 h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
   text-align: center;
 }
 
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $grayLight;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
+.container {
+  margin-left: 230px;
+  width: 980px;
 }
 
 /* header */
 
 #logo {
-  float: left;
-  margin-right: 10px;
   font-size: 1.7em;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 9px;
   font-weight: bold;
-  line-height: 1;
   &:hover {
     color: #fff;
     text-decoration: none;
@@ -86,7 +61,7 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
+  color: $gray-light;
   a {
     color: #555;
     &:hover {
@@ -111,7 +86,7 @@ footer {
 aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLight;
+    border-top: 1px solid $gray-light;
     &:first-child {
       border: 0;
       padding-top: 0;
@@ -140,7 +115,7 @@ aside {
   a {
     float: left;
     padding: 0 10px;
-    border-left: 1px solid $grayLight;
+    border-left: 1px solid $gray-light;
     color: gray;
     &:first-child {
       padding-left: 0;
@@ -148,7 +123,7 @@ aside {
     }
     &:hover {
       text-decoration: none;
-      color: $blue;
+      color: $brand-primary;
     }
   }
   strong {
@@ -178,6 +153,7 @@ aside {
 .microposts {
   list-style: none;
   margin: 10px 0 0 0;
+  padding-left: 0px;
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
@@ -189,7 +165,7 @@ aside {
 }
 
 .timestamp {
-  color: $grayLight;
+  color: $gray-light;
 }
 
 /* forms */
@@ -210,6 +186,7 @@ input {
   ul {
     list-style: none;
     margin: 0 0 18px 0;
+    padding-left: 0;
   }
 }
 
@@ -223,12 +200,13 @@ input {
 .users {
   list-style: none;
   margin: 0;
+  padding-left: 0;
   li {
     overflow: auto;
     padding: 10px 0;
-    border-top: 1px solid $grayLight;
+    border-top: 1px solid $gray-light;
     &:last-child {
-      border-bottom: 1px solid $grayLight;
+      border-bottom: 1px solid $gray-light;
     }
   }
 }

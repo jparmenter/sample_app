@@ -1,12 +1,14 @@
 <%= form_for(@micropost) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+  <div class="form-group">
+    <%= f.text_area :content, class: "form-control", placeholder: "Compose new micropost..." %>
   </div>
   <div class="row">
-    <div class="span" style="margin-right:5px;">
-      <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+    <div class="col-sm-3">
+      <%= f.button "Post", class: "btn btn-lg btn-primary" %>
     </div>
-    <span class="word-countdown">140</span>
+    <div class="col-sm-1">
+      <span class="word-countdown">140</span>
+    </div>
   </div>
 <% end %>

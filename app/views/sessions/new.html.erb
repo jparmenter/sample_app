@@ -1,15 +1,17 @@
 <% provide(:title, "Sign in") %>
 <h1>Sign in</h1>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="col-md-6 col-md-offset-3">
     <%= form_tag(sessions_path) do %>
       <%= label_tag :email %>
-      <%= text_field_tag :email %>
+      <%= text_field_tag :email, nil, class: "form-control" %>
 
       <%= label_tag :password %>
-      <%= password_field_tag :password %>
+      <%= password_field_tag :password, nil, class: "form-control" %>
 
-      <%= submit_tag "Sign in", class: "btn btn-large btn-primary" %>
+      <div class="form-group">
+        <%= button_tag "Sign in", class: "btn btn-lg btn-primary" %>
+      </div>
     <% end %>
     <p>New user? <%= link_to "Sign up now!", signup_path %></p>
   </div>

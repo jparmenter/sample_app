@@ -96,7 +96,7 @@ describe "User Pages" do
 
         describe "toggling the button" do
           before { click_button "Follow" }
-          it { should have_xpath("//input[@value='Unfollow']") }
+          it { should have_xpath("//button[contains(., 'Unfollow')]") }
         end
       end
 
@@ -120,7 +120,7 @@ describe "User Pages" do
 
         describe "toggling the button" do
           before { click_button "Unfollow" }
-          it { should have_xpath("//input[@value='Follow']") }
+          it { should have_xpath("//button[contains(., 'Follow')]") }
         end
       end
     end
@@ -153,7 +153,7 @@ describe "User Pages" do
     describe "with invalid information" do
       before { click_button "Save changes" }
 
-      it { should have_selector(full_banner_css('error'), text: 'error') }
+      it { should have_selector(full_banner_css('danger'), text: 'error') }
     end
 
     describe "with valid information" do
