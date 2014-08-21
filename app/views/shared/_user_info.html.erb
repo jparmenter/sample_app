@@ -2,11 +2,8 @@
 <h1>
   <%= @user.name %>
 </h1>
-<span class="text-muted">@<%= @user.username %></span>
+<span><%= link_to "@#{@user.username}", @user, class: "text-muted" %></span>
 <% if !current_page?(user_path(@user)) %>
-  <span>
-    <%= link_to "view my profile", @user %>
-  </span>
   <span>
     <%= pluralize(@user.microposts.count, "micropost") %>
   </span>
