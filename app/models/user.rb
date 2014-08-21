@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  VALID_USERNAME_REGEX = /\A[a-zA-Z0-9][a-zA-Z0-9_-]*\z/i
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
   has_secure_password
   has_many :microposts, dependent: :destroy
@@ -9,6 +10,7 @@ class User < ActiveRecord::Base
   before_create :create_remember_token
   before_save { email.downcase! }
   validates :name, presence: true, length: { maximum: 50 }
+  validates :username, presence: true, length: { maximum: 15 }, uniqueness: { case_sensitive: false }, format: { with: VALID_USERNAME_REGEX }
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
 

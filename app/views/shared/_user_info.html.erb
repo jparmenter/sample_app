@@ -2,6 +2,7 @@
 <h1>
   <%= @user.name %>
 </h1>
+<span class="text-muted">@<%= @user.username %></span>
 <% if !current_page?(user_path(@user)) %>
   <span>
     <%= link_to "view my profile", @user %>

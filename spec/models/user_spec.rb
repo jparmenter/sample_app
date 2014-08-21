@@ -2,12 +2,13 @@ require 'spec_helper'
 
 describe User do
 
-  let(:user) { User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar") }
+  let(:user) { User.new(username: "user", name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar") }
 
   subject { user }
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
+  it { should respond_to(:username) }
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
@@ -37,9 +38,49 @@ describe User do
     it { should_not be_valid }
   end
 
+  describe "when email is not present" do
+    before { user.username = " " }
+    it { should_not be_valid }
+  end
+
   describe "when name is too long" do
     before { user.name = "a" * 51 }
     it { should_not be_valid }
+  end
+
+  describe "when username is too long" do
+    before { user.username = "a" * 16 }
+    it { should_not be_valid }
+  end
+
+  describe "when username is already taken" do
+    before do
+      user_with_same_username = user.dup
+      user_with_same_username.username = user.username.upcase
+      user_with_same_username.email = "user1@example.com"
+      user_with_same_username.save
+    end
+    it { should_not be_valid }
+  end
+
+  describe "when username is invalid" do
+    it "should be invalid" do
+      usernames = ['user 1', 'name@']
+      usernames.each do |invalid_username|
+        user.username = invalid_username
+        expect(user).not_to be_valid
+      end
+    end
+  end
+
+  describe "when username is valid" do
+    it "should be valid" do
+      usernames = %w[user_name1 USER1_ user user-1]
+      usernames.each do |valid_username|
+        user.username = valid_username
+        expect(user).to be_valid
+      end
+    end
   end
 
   describe "when email format is invalid" do
@@ -65,6 +106,7 @@ describe User do
   describe "when email address is already taken" do
     before do
       user_with_same_email = user.dup
+      user_with_same_email.username = "user1"
       user_with_same_email.email = user.email.upcase
       user_with_same_email.save
     end
