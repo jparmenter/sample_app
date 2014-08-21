@@ -29,6 +29,23 @@ describe "Micropost pages" do
       it "should create a micropost" do
         expect { click_button "Post" }.to change(Micropost, :count).by(1)
       end
+
+      describe "with reply" do
+        let(:other_user) { FactoryGirl.create(:user) }
+
+        before do
+          fill_in 'micropost_content', with: "@#{other_user.username} hello other user"
+          click_button "Post"
+        end
+
+        it "should have a sender count of 1" do
+          expect(user.feed.count).to eq(1)
+        end
+
+        it "should have a reciever count of 1" do
+          expect(other_user.feed.count).to eq(1)
+        end
+      end
     end
   end
 

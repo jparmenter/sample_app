@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   VALID_USERNAME_REGEX = /\A[a-zA-Z0-9][a-zA-Z0-9_-]*\z/i
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
+  USER_REPLY_REGEX = /\A@([a-zA-Z0-9_-]*)/
   has_secure_password
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
@@ -20,6 +21,10 @@ class User < ActiveRecord::Base
 
   def User.digest(token)
     Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  def User.reply_match(content)
+    USER_REPLY_REGEX.match(content)
   end
 
   def feed
