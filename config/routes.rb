@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :messages, only: [:new, :create, :index, :show] do
+  resources :messages do
     get 'sent', on: :collection
   end
 end

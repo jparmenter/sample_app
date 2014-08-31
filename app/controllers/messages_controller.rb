@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_action :signed_in_user
-  before_action :owned_message, only: [:show]
+  before_action :set_message, only: [:show, :destroy]
+  before_action :correct_user, only: [:show, :destroy]
 
   def new
     @message = current_user.messages.build
@@ -21,11 +22,16 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.find(params[:id])
   end
 
   def sent
     @messages = current_user.messages.paginate(page: params[:page])
+  end
+
+  def destroy
+    @message.destroy
+    flash[:success] = "Message deleted!"
+    redirect_to messages_path
   end
 
   private
@@ -33,7 +39,11 @@ class MessagesController < ApplicationController
       params.require(:message).permit(:content, :to, :receiver_id)
     end
 
-    def owned_message
+    def set_message
+      @message = Message.find(params[:id])
+    end
+
+    def correct_user
       @message =  Message.find(params[:id])
       redirect_to(root_url) unless current_user?(@message.sender) || current_user?(@message.receiver)
     end

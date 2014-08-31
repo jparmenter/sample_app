@@ -164,6 +164,11 @@ describe "Authentication" do
           before { visit sent_messages_path }
           it { should have_title(full_title('Sign in')) }
         end
+
+        describe "submitting the delete action" do
+          before { delete message_path(m1) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
       end
     end
 
@@ -201,12 +206,19 @@ describe "Authentication" do
         specify { expect(response).to redirect_to(root_url) }
       end
 
-      describe "submitting a GET request to the Messages#show action" do
+      describe "in the Messages controller" do
         let(:other_user) { FactoryGirl.create(:user) }
         let!(:m1) { FactoryGirl.create(:message, sender: wrong_user, receiver: other_user) }
 
-        before { get message_path(m1) }
-        specify { expect(response).to redirect_to(root_url) }
+        describe "submitting a GET request to the Messages#show action" do
+          before { get message_path(m1) }
+          specify { expect(response).to redirect_to(root_url) }
+        end
+
+        describe "submitting a DELETE request to the Messages#dstroy action" do
+          before { delete message_path(m1) }
+          specify { expect(response).to redirect_to(root_url) }
+        end
       end
     end
 

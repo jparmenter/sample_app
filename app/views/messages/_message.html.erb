@@ -4,7 +4,8 @@
   <% else %>
     <%= render 'user_info', object: message.receiver %>
   <% end %>
-  <%= link_to "View Message", message_path(message) %>
+  | <%= link_to "view", message_path(message) %>
+  | <%= link_to "delete", message, method: :delete, data: { confirm: "You sure?" } %>
   <span class="content"><%= message.content %></span>
   <span class="timestamp">
     Sent <%= time_ago_in_words(message.created_at) %> ago.

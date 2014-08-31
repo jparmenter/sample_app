@@ -51,8 +51,15 @@ describe "Message Page" do
     describe "messages" do
       it { should have_content(m1.sender.name) }
       it { should have_content(m1.content) }
-      it { should have_link("View Message", message_path(m1)) }
+      it { should have_link("view", message_path(m1)) }
       it { should have_content(m2.content) }
+      it { should have_link("delete", message_path(m1)) }
+    end
+
+    it "should be able to delete another message" do
+      expect do
+        click_link('delete', match: :first)
+      end.to change(Message, :count).by(-1)
     end
   end
 
@@ -67,7 +74,7 @@ describe "Message Page" do
     describe "messages" do
       it { should have_content(sent_message.receiver.name)}
       it { should have_content(sent_message.content) }
-      it { should have_link("View Message", message_path(sent_message)) }
+      it { should have_link("view", message_path(sent_message)) }
     end
   end
 
