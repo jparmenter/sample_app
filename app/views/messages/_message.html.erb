@@ -1,0 +1,12 @@
+<li>
+  <% if current_page?(messages_path) %>
+    <%= render 'user_info', object: message.sender %>
+  <% else %>
+    <%= render 'user_info', object: message.receiver %>
+  <% end %>
+  <%= link_to "View Message", message_path(message) %>
+  <span class="content"><%= message.content %></span>
+  <span class="timestamp">
+    Sent <%= time_ago_in_words(message.created_at) %> ago.
+  </span>
+</li>

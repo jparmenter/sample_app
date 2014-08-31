@@ -1,0 +1,15 @@
+<%= provide(:title, "View Message") %>
+<h1>View Message</h1>
+<div class="row">
+  <%= render 'sidebar' %>
+  <div class="col-md-8">
+    <div class="jumbotron">
+      <h3>To: <%= link_to @message.receiver.name, @message.receiver %></h3>
+      <h3>From: <%= link_to @message.sender.name, @message.sender %></h3>
+      <span class="timestamp">
+        Sent <%= time_ago_in_words(@message.created_at) %> ago.
+      </span>
+    </div>
+    <span><%= @message.content %></span>
+  </div>
+</div>

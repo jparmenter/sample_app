@@ -24,6 +24,7 @@ describe User do
   it { should respond_to(:following?) }
   it { should respond_to(:follow!) }
   it { should respond_to(:unfollow!) }
+  it { should respond_to(:messages) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -250,6 +251,30 @@ describe User do
         followers.each do |follower|
           expect(Relationship.where(follower_id: follower.id, followed_id: other_user.id)).to be_empty
         end
+      end
+    end
+  end
+
+  describe "message associations" do
+    before { user.save }
+    let(:other_user) { FactoryGirl.create(:user) }
+    let!(:older_message) { FactoryGirl.create(:message, sender: user, receiver: other_user, created_at: 1.day.ago) }
+    let!(:newer_message) { FactoryGirl.create(:message, sender: user, receiver: other_user, created_at: 1.day.ago) }
+
+    it "should have the right messages in the right order" do
+      expect(user.messages.to_a).to eq [newer_message, older_message]
+    end
+
+    it "should have the right received message in the right order for the other user" do
+      expect(other_user.received_messages.to_a).to eq [newer_message, older_message]
+    end
+
+    it "should destroy associated messages" do
+      messages = user.messages.to_a
+      user.destroy
+      expect(messages).not_to be_empty
+      messages.each do |message|
+        expect(Message.where(id: message.id)).to be_empty
       end
     end
   end

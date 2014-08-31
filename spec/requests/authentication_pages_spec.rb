@@ -27,6 +27,7 @@ describe "Authentication" do
       before { sign_in user}
 
       it { should have_title(full_title(user.name)) }
+      it { should have_link('Messages', href: messages_path) }
       it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
@@ -45,6 +46,7 @@ describe "Authentication" do
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
+      it { should_not have_link('Messages', href: messages_path) }
       it { should_not have_link('Users', href: users_path) }
       it { should_not have_link('Profile', href: user_path(user)) }
       it { should_not have_link('Settings', href: edit_user_path(user)) }
@@ -132,6 +134,37 @@ describe "Authentication" do
           end
         end
       end
+
+      describe "in the Message controller" do
+        let(:user) { FactoryGirl.create(:user) }
+        let(:other_user) { FactoryGirl.create(:user) }
+        let!(:m1) { FactoryGirl.create(:message, content: "Lorem ipsum", sender: user, receiver: other_user) }
+
+        describe "visiting the index page" do
+          before { visit messages_path }
+          it { should have_title(full_title('Sign in')) }
+        end
+
+        describe "submitting the create action" do
+          before { post messages_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "visiting the new page" do
+          before { visit new_message_path }
+          it { should have_title(full_title('Sign in')) }
+        end
+
+        describe "visiting the show page" do
+          before { visit message_path(m1) }
+          it { should have_title(full_title('Sign in')) }
+        end
+
+        describe "visiting the sent page" do
+          before { visit sent_messages_path }
+          it { should have_title(full_title('Sign in')) }
+        end
+      end
     end
 
     describe "for signed-in users" do
@@ -165,6 +198,14 @@ describe "Authentication" do
 
       describe "submitting a PATCH request to the Users#update action" do
         before { patch user_path(wrong_user) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+
+      describe "submitting a GET request to the Messages#show action" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        let!(:m1) { FactoryGirl.create(:message, sender: wrong_user, receiver: other_user) }
+
+        before { get message_path(m1) }
         specify { expect(response).to redirect_to(root_url) }
       end
     end

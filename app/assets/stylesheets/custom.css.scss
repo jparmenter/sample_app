@@ -160,6 +160,10 @@ aside {
   }
 }
 
+.messages {
+  @extend .microposts;
+}
+
 .content {
   display: block;
 }

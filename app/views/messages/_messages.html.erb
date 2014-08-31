@@ -1,0 +1,8 @@
+<div class="col-md-8">
+  <% if @messages.any? %>
+    <ul class="messages">
+      <%= render @messages %>
+    </ul>
+    <%= will_paginate %>
+  <% end %>
+</div>
